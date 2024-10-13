@@ -6,9 +6,10 @@ export default function SocialBar() {
     return (
         <div className={"flex content-center justify-center"}>
             <div
-                className="relative flex w-3/4 flex-wrap items-center content-center justify-between py-2 shadow-dark-mild lg:py-4 "
+                className="relative flex flex-wrap items-center content-center justify-between py-2 shadow-dark-mild lg:py-4 "
                 data-twe-navbar-ref="nav">
-                <div className="grid grid-cols-4 w-full items-center justify-center px-3">
+
+                <div className="grid grid-cols-3 w-full items-center justify-center px-3">
                     <a href={LINKS[0]} className={"mx-2"}>
                         <span className="[&>svg]:h-7 [&>svg]:w-7 [&>svg]:fill-[#0088cc]">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">

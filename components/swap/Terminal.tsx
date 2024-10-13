@@ -259,6 +259,9 @@ export default function Terminal() {
                 </section>
 
                 <div className="max-w-xl lg:max-w-3xl">
+                    <div className="flex rounded border border-green-700 bg-gray-800 p-2 items-center justify-center">
+                        <SocialBar />
+                    </div>
                     <h2 className="mt-6 mx-20 text-2xl font-bold text-green-700 sm:text-3xl md:text-4xl">
                         👽 Buy GONK on SOL 👽
                     </h2>
