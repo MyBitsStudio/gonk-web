@@ -21,10 +21,6 @@ import SocialBar from "@/components/socialBar";
 
 const connection = new Connection(NETWORK, 'confirmed');
 const jupiterApi = createJupiterApiClient({basePath: "https://quote-api.jup.ag/v6"});
-const provider = new ReferralProvider(connection);
-const referral = new PublicKey("HnWBoYguFcT2fXS33WkmcwuhegWmJdXiNqeF6HWuMjpk")
-const mint = new PublicKey("6BTLQF6WGVJfThHoWqX2WDecCWiaiJj52Sw9kQkHpump")
-const key = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(FEE_ACCOUNT)))
 
 export default function Terminal() {
 
@@ -64,8 +60,7 @@ export default function Terminal() {
                 maxAutoSlippageBps: slippage,
                 minimizeSlippage: true,
                 onlyDirectRoutes: false,
-                asLegacyTransaction: false,
-                platformFeeBps: 100
+                asLegacyTransaction: false
             }).then(async r => {
                 if (r) {
                     buyQuote = r
@@ -75,72 +70,12 @@ export default function Terminal() {
                     setMinimum(Number(r.otherAmountThreshold))
                     setImpact(Number(r.priceImpactPct))
 
-                    if(!key){
-                        console.error("No key")
-                        return
-                    }
-
-                    const { tx, referralTokenAccountPubKey } =
-                        await provider.initializeReferralTokenAccount({
-                            payerPubKey: key.publicKey,
-                            referralAccountPubKey: referral,
-                            mint,
-                        });
-
-                    const referralTokenAccount = await connection.getAccountInfo(
-                        referralTokenAccountPubKey,
-                    );
-
-                    if(referralTokenAccount){
-                        console.log("Referral Token Account", referralTokenAccount)
-                    } else {
-                        console.error("No referral token account")
-                        if (signTransaction) {
-
-                            console.log("Signing transaction")
-
-                            const latestBlockHash = await connection.getLatestBlockhash()
-
-                            if(latestBlockHash){
-
-                                console.log("Latest block hash", latestBlockHash)
-
-                                tx.recentBlockhash = latestBlockHash.blockhash;
-                                tx.feePayer = key.publicKey;
-                                tx.sign(key)
-
-                                const txid =  await connection.sendRawTransaction(tx.serialize(), {
-                                    skipPreflight: true,
-                                })
-
-                                console.log("Txid", txid)
-
-                                if(txid){
-                                     const confirm = await connection.confirmTransaction({
-                                        blockhash: latestBlockHash.blockhash,
-                                        lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-                                        signature: txid
-                                    }, "confirmed")
-
-                                    console.log("Confirm", confirm)
-
-                                    if(confirm) {
-                                        console.log("Confirmed")
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-
-
                     await jupiterApi.swapPost({
                         swapRequest: {
                             quoteResponse: r,
                             userPublicKey: publicKey?.toBase58() as string,
                             dynamicComputeUnitLimit: true,
-                            prioritizationFeeLamports: "auto",
-                            feeAccount: referralTokenAccountPubKey.toBase58(),
+                            prioritizationFeeLamports: "auto"
                         }
                     }).then(async r => {
                         if (r) {
@@ -292,7 +227,7 @@ export default function Terminal() {
         }
 
         sendTransaction().then(() => {
-
+            reset()
         })
     }
     function useIsMobile() {
