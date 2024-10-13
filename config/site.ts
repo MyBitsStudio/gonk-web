@@ -1,14 +1,13 @@
 
-export const QUICK = "https://neat-magical-butterfly.solana-mainnet.quiknode.pro/efb9ba3fcdb9b70776ee7daac7c3b8d21899bb2c/";
+export const QUICK = "https://greatest-side-research.solana-mainnet.quiknode.pro/837f66edd3874c18f0c2fcaf15354599a43e81d6";
 
 // You can use any of the other enpoints here
 export const NETWORK = QUICK;
 
 export const LINKS = [
-    "https://t.me/PEPEONPUMPFUN11", //telegram
-    "https://x.com/pepeonpumpfun?s=21", //X
-    "https://dexscreener.com/solana/32oszbqqfaafzcg6guobjz9gnpyh2qta7cokrdsxjvsk", //dexscreener
-    "https://www.dextools.io/app/en/solana/pair-explorer/32oszbqQFAAfZCG6guoBJZ9gnPyH2qTA7CoKrDsxjvsk"//dextools
+    "https://t.me/GONKTHEALIEN", //telegram
+    "https://x.com/Gonkthealien", //X
+    "https://dexscreener.com/solana/fgugo8mhwzzf4kg163bdtzg5cas8p5eksgpedq9itx3n"
 ]
 
 export const SOL_ADDRESS = "So11111111111111111111111111111111111111112"
